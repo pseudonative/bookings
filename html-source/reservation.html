@@ -24,8 +24,8 @@
     .room-image {
         max-width: 50%;
     }
-    .redText {
-      color: red;
+    .notie-container {
+      box-shadow: none;
     }
 
 	</style>
@@ -136,12 +136,7 @@ console.log("I am printing from javascript");
 })()
 
 document.getElementById("colorButton").addEventListener("click",function () {
-    let myEl = document.getElementById("myParagraph");
-    if (myEl.classList.contains("redText")){
-      myEl.classList.remove("redText");
-    }else{
-      myEl.classList.add("redText");
-  }
+    notify("THis is my message", "success")
 })
 
 const elem = document.getElementById('reservation-dates');
@@ -149,13 +144,13 @@ const rangepicker = new DateRangePicker(elem, {
   // ...options
 }); 
 
-function alert() {
+function notify(msg, msgType) {
   notie.alert({
-  type: "success",
+  type: msgType,
   text: msg,
-  
 })
 }
+
 </script>
 
 	
