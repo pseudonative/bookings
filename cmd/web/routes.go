@@ -3,11 +3,10 @@ package main
 import (
 	"net/http"
 
-	"github.com/pseudonative/bookings/pkg/config"
-	"github.com/pseudonative/bookings/pkg/handlers"
-
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/pseudonative/web_page_in_go/pkg/config"
+	"github.com/pseudonative/web_page_in_go/pkg/handlers"
 )
 
 func routes(app *config.AppConfig) http.Handler {
@@ -19,9 +18,5 @@ func routes(app *config.AppConfig) http.Handler {
 
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
-
-	fileServer := http.FileServer(http.Dir("./static/"))
-	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
-
 	return mux
 }

@@ -3,15 +3,15 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/pseudonative/bookings/pkg/config"
-	"github.com/pseudonative/bookings/pkg/models"
-	"github.com/pseudonative/bookings/pkg/render"
+	"github.com/pseudonative/web_page_in_go/pkg/config"
+	"github.com/pseudonative/web_page_in_go/pkg/models"
+	"github.com/pseudonative/web_page_in_go/pkg/render"
 )
 
-// Repo the repository used by the handlers
+// Repo the repository used by handlers
 var Repo *Repository
 
-// Repository is the repository type
+// Repository represents a repository type
 type Repository struct {
 	App *config.AppConfig
 }
@@ -32,6 +32,7 @@ func NewHandlers(r *Repository) {
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
+
 	render.RenderTemplate(w, "home.page.html", &models.TemplateData{})
 }
 
@@ -45,7 +46,7 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 
 	stringMap["remote_ip"] = remoteIP
 
-	//
+	// send data
 	render.RenderTemplate(w, "about.page.html", &models.TemplateData{
 		StringMap: stringMap,
 	})

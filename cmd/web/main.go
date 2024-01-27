@@ -4,24 +4,23 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
-	"github.com/pseudonative/bookings/pkg/config"
-	"github.com/pseudonative/bookings/pkg/handlers"
-	"github.com/pseudonative/bookings/pkg/render"
-
 	"github.com/alexedwards/scs/v2"
+	"github.com/pseudonative/web_page_in_go/pkg/config"
+	"github.com/pseudonative/web_page_in_go/pkg/handlers"
+	"github.com/pseudonative/web_page_in_go/pkg/render"
 )
 
 const portNumber = ":8080"
 
 var app config.AppConfig
-
 var session *scs.SessionManager
 
 // main is the main application function
 func main() {
-	// change this to true when in production
+	// Change to true in prod
 	app.InProduction = false
 
 	session = scs.New()
@@ -45,13 +44,18 @@ func main() {
 
 	render.NewTemplates(&app)
 
-	fmt.Println(fmt.Sprintf("Starting application on port %s", portNumber))
+	wd, err := os.Getwd()
+	if err != nil {
+		log.Println("error getting working directory: ", err)
+	}
 
+	fmt.Println("Current working directory: ", wd)
+
+	fmt.Printf("starting application on port %s", portNumber)
 	srv := &http.Server{
 		Addr:    portNumber,
 		Handler: routes(&app),
 	}
-
 	err = srv.ListenAndServe()
 	log.Fatal(err)
 }

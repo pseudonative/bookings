@@ -2,14 +2,13 @@ package render
 
 import (
 	"bytes"
-	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"path/filepath"
-	"text/template"
 
-	"github.com/pseudonative/bookings/pkg/config"
-	"github.com/pseudonative/bookings/pkg/models"
+	"github.com/pseudonative/web_page_in_go/pkg/config"
+	"github.com/pseudonative/web_page_in_go/pkg/models"
 )
 
 var functions = template.FuncMap{}
@@ -22,50 +21,47 @@ func NewTemplates(a *config.AppConfig) {
 }
 
 func AddDefaultData(td *models.TemplateData) *models.TemplateData {
-
 	return td
 }
 
-// RenderTemplate renders templates using html/template
-func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, html string, td *models.TemplateData) {
 	var tc map[string]*template.Template
-
-	// get the template cache from the app config
 	if app.UseCache {
+		// create a template cache from the app config
 		tc = app.TemplateCache
 	} else {
 		tc, _ = CreateTemplateCache()
 	}
 
-	t, ok := tc[tmpl]
+	// get requested template out of cache
+	t, ok := tc[html]
 	if !ok {
 		log.Fatal("could not get template from template cache")
 	}
-
 	buf := new(bytes.Buffer)
 
 	td = AddDefaultData(td)
 
 	_ = t.Execute(buf, td)
 
+	// render template
 	_, err := buf.WriteTo(w)
 	if err != nil {
-		fmt.Println("Error writing template to browser", err)
+		log.Println("Error writing template to browser", err)
 	}
 }
 
-// CreateTemplateCache creates a template cache
 func CreateTemplateCache() (map[string]*template.Template, error) {
-
 	myCache := map[string]*template.Template{}
-
+	// get all files named *.page.html from ./templates
 	pages, err := filepath.Glob("./templates/*.page.html")
 	if err != nil {
 		return myCache, err
 	}
+	// range through all files ending with *.page.html
 	for _, page := range pages {
 		name := filepath.Base(page)
-		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
+		ts, err := template.New(name).ParseFiles(page)
 		if err != nil {
 			return myCache, err
 		}

@@ -6,6 +6,7 @@ import (
 	"github.com/justinas/nosurf"
 )
 
+// NoSurf adds CSRF protection to all Post Responses
 func NoSurf(next http.Handler) http.Handler {
 	csrfHandler := nosurf.New(next)
 	csrfHandler.SetBaseCookie(http.Cookie{
@@ -17,7 +18,7 @@ func NoSurf(next http.Handler) http.Handler {
 	return csrfHandler
 }
 
-// SessionLoad loads and saves the session on every request
+// SessionLoad loads and saves session on requests
 func SessionLoad(next http.Handler) http.Handler {
 	return session.LoadAndSave(next)
 }
