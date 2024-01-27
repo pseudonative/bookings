@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/pseudonative/web_page_in_go/pkg/config"
-	"github.com/pseudonative/web_page_in_go/pkg/models"
+	"github.com/pseudonative/bookings/pkg/config"
+	"github.com/pseudonative/bookings/pkg/models"
 )
 
 var functions = template.FuncMap{}

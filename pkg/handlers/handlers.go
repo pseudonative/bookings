@@ -3,9 +3,9 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/pseudonative/web_page_in_go/pkg/config"
-	"github.com/pseudonative/web_page_in_go/pkg/models"
-	"github.com/pseudonative/web_page_in_go/pkg/render"
+	"github.com/pseudonative/bookings/pkg/config"
+	"github.com/pseudonative/bookings/pkg/models"
+	"github.com/pseudonative/bookings/pkg/render"
 )
 
 // Repo the repository used by handlers

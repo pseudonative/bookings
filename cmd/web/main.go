@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/pseudonative/web_page_in_go/pkg/config"
-	"github.com/pseudonative/web_page_in_go/pkg/handlers"
-	"github.com/pseudonative/web_page_in_go/pkg/render"
+	"github.com/pseudonative/bookings/pkg/config"
+	"github.com/pseudonative/bookings/pkg/handlers"
+	"github.com/pseudonative/bookings/pkg/render"
 )
 
 const portNumber = ":8080"
